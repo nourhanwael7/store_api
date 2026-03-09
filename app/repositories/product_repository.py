@@ -3,22 +3,22 @@ from app.models.product import Product
 from app.schemas.product import ProductCreate
 
 
-def create_product(db: Session, product: ProductCreate):
+class ProductRepository:
 
-    db_product = Product(**product.dict())
+    def create_product(self, db: Session, product: ProductCreate):
 
-    db.add(db_product)
-    db.commit()
-    db.refresh(db_product)
+        db_product = Product(**product.dict())
 
-    return db_product
+        db.add(db_product)
+        db.commit()
+        db.refresh(db_product)
 
+        return db_product
 
-def get_products(db: Session):
+    def get_products(self, db: Session):
 
-    return db.query(Product).all()
+        return db.query(Product).all()
 
+    def get_products_by_category(self, db: Session, category_id: int):
 
-def get_products_by_category(db: Session, category_id: int):
-
-    return db.query(Product).filter(Product.category_id == category_id).all()
+        return db.query(Product).filter(Product.category_id == category_id).all()
