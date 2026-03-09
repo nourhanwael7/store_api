@@ -11,8 +11,9 @@ class ProductService:
     def create_product(self, db: Session, product: ProductCreate):
         return self.product_repository.create_product(db, product)
 
-    def get_products(self, db: Session):
-        return self.product_repository.get_products(db)
+    def get_products(self, db: Session, skip: int = 0, limit: int = 10):
+    return self.product_repository.get_products(db, skip, limit)
 
     def get_products_by_category(self, db: Session, category_id: int):
         return self.product_repository.get_products_by_category(db, category_id)
+    

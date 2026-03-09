@@ -16,9 +16,9 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/")
-def get_products(category_id: int = None, db: Session = Depends(get_db)):
-
-    if category_id:
-        return product_service.get_products_by_category(db, category_id)
-
-    return product_service.get_products(db)
+def get_products(
+    skip: int = 0,
+    limit: int = 10,
+    db: Session = Depends(get_db)
+):
+    return product_service.get_products(db, skip, limit)

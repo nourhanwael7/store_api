@@ -15,9 +15,8 @@ class ProductRepository:
 
         return db_product
 
-    def get_products(self, db: Session):
-
-        return db.query(Product).all()
+    def get_products(self, db: Session, skip: int = 0, limit: int = 10):
+        return db.query(Product).offset(skip).limit(limit).all() 
 
     def get_products_by_category(self, db: Session, category_id: int):
 
