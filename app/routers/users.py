@@ -1,19 +1,13 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
-from app.core.database import SessionLocal
+from app.dependencies.db import get_db
 from app.schemas.user import UserCreate
 from app.services import user_service
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
 
 
 @router.post("/")

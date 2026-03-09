@@ -1,19 +1,14 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from app.dependencies.db import get_db
 
-from app.core.database import SessionLocal
 from app.schemas.product import ProductCreate
 from app.services import product_service
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
 
 
 @router.post("/")
