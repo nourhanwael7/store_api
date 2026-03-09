@@ -3,10 +3,11 @@ from sqlalchemy.orm import Session
 from app.dependencies.db import get_db
 
 from app.schemas.category import CategoryCreate
-from app.services import category_service
+from app.services.category_service import CategoryService
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
 
+category_service = CategoryService()
 
 
 @router.post("/")

@@ -3,12 +3,11 @@ from sqlalchemy.orm import Session
 from app.dependencies.db import get_db
 
 from app.schemas.product import ProductCreate
-from app.services import product_service
+from app.services.product_service import ProductService
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
-
-
+product_service = ProductService()
 
 
 @router.post("/")

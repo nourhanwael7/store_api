@@ -1,13 +1,12 @@
 from sqlalchemy.orm import Session
-from app.crud import category_crud
 from app.schemas.category import CategoryCreate
+from app.repositories import category_repository
 
 
-def create_category(db: Session, category: CategoryCreate):
+class CategoryService:
 
-    return category_crud.create_category(db, category)
+    def create_category(self, db: Session, category: CategoryCreate):
+        return category_repository.create_category(db, category)
 
-
-def get_categories(db: Session):
-
-    return category_crud.get_categories(db)
+    def get_categories(self, db: Session):
+        return category_repository.get_categories(db)
