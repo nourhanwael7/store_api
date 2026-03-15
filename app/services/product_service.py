@@ -1,18 +1,19 @@
 from sqlalchemy.orm import Session
-from app.crud import product_crud
 from app.schemas.product import ProductCreate
+from app.repositories.product_repository import ProductRepository
 
 
-def create_product(db: Session, product: ProductCreate):
+class ProductService:
 
-    return product_crud.create_product(db, product)
+    def __init__(self, db: Session):
+        self.db = db
+        self.product_repository = ProductRepository( db )
 
+    def create_product(self, product: ProductCreate):
+        return self.product_repository.create_product(self.db, product)
 
-def get_products(db: Session):
+    def get_products(self, skip: int = 0, limit: int = 10):
+        return self.product_repository.get_products(self.db, skip, limit)
 
-    return product_crud.get_products(db)
-
-
-def get_products_by_category(db: Session, category_id: int):
-
-    return product_crud.get_products_by_category(db, category_id)
+    def get_products_by_category(self, category_id: int):
+        return self.product_repository.get_products_by_category(self.db, category_id)

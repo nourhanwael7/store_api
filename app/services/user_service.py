@@ -1,17 +1,19 @@
 from sqlalchemy.orm import Session
-from app.crud import user_crud
 from app.schemas.user import UserCreate
+from app.repositories.user_repository import UserRepository
 
 
-def create_user(db: Session, user: UserCreate):
+class UserService:
 
-    existing_user = user_crud.get_user_by_username(db, user.username)
+    def __init__(self, db: Session):
+        self.db = db
+        self.user_repository = UserRepository( db )
 
-    if existing_user:
-        raise Exception("Username already exists")
+    def create_user(self, user: UserCreate):
 
-    return user_crud.create_user(db, user)
+        existing_user = self.user_repository.get_user_by_username(self.db, user.username)
 
+        if existing_user:
+            raise Exception("Username already exists")
 
-
-    
+        return self.user_repository.create_user(self.db, user)

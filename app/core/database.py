@@ -1,12 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from pydantic_settings import BaseSettings
 
-DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_engine(DATABASE_URL)
+class Settings(BaseSettings):
+    DATABASE_URL: str
+
+    class Config:
+        env_file = ".env"
+
+
+settings = Settings()
+
+engine = create_engine(settings.DATABASE_URL)
 
 SessionLocal = sessionmaker(bind=engine)
 
