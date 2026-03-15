@@ -5,11 +5,15 @@ from app.repositories.category_repository import CategoryRepository
 
 class CategoryService:
 
-    def __init__(self):
-        self.category_repository = CategoryRepository()
+    def __init__(self, db: Session):
+        self.db = db
+        self.category_repository = CategoryRepository( db )
 
-    def create_category(self, db: Session, category: CategoryCreate):
-        return self.category_repository.create_category(db, category)
+    def create_category(self, category: CategoryCreate):
+        return self.category_repository.create_category(self.db, category)
 
-    def get_categories(self, db: Session):
-        return self.category_repository.get_categories(db)
+    def get_categories(self):
+        return self.category_repository.get_categories(self.db)
+
+
+c

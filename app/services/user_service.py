@@ -5,14 +5,15 @@ from app.repositories.user_repository import UserRepository
 
 class UserService:
 
-    def __init__(self):
-        self.user_repository = UserRepository()
+    def __init__(self, db: Session):
+        self.db = db
+        self.user_repository = UserRepository( db )
 
-    def create_user(self, db: Session, user: UserCreate):
+    def create_user(self, user: UserCreate):
 
-        existing_user = self.user_repository.get_user_by_username(db, user.username)
+        existing_user = self.user_repository.get_user_by_username(self.db, user.username)
 
         if existing_user:
             raise Exception("Username already exists")
 
-        return self.user_repository.create_user(db, user)
+        return self.user_repository.create_user(self.db, user)

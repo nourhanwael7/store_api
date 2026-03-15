@@ -1,20 +1,13 @@
-from sqlalchemy.orm import Session
 from app.models.category import Category
-from app.schemas.category import CategoryCreate
+from app.repositories.base_repository import BaseRepository
 
 
-class CategoryRepository:
+class CategoryRepository(BaseRepository):
 
-    def create_category(self, db: Session, category: CategoryCreate):
+    def create_category(self, category):
 
-        db_category = Category(**category.dict())
+        db_category = Category(**category.model_dump())
+        return self.add(db_category)
 
-        db.add(db_category)
-        db.commit()
-        db.refresh(db_category)
-
-        return db_category
-
-    def get_categories(self, db: Session):
-
-        return db.query(Category).all()
+    def get_categories(self):
+        return self.get_all(Category)
