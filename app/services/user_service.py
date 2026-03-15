@@ -7,7 +7,7 @@ class UserService:
 
     def __init__(self, db: Session):
         self.db = db
-        self.user_repository = UserRepository()
+        self.user_repository = UserRepository( db )
 
     def create_user(self, user: UserCreate):
 

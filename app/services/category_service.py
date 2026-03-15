@@ -7,10 +7,13 @@ class CategoryService:
 
     def __init__(self, db: Session):
         self.db = db
-        self.category_repository = CategoryRepository()
+        self.category_repository = CategoryRepository( db )
 
     def create_category(self, category: CategoryCreate):
         return self.category_repository.create_category(self.db, category)
 
     def get_categories(self):
         return self.category_repository.get_categories(self.db)
+
+
+c

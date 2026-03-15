@@ -7,7 +7,7 @@ class ProductService:
 
     def __init__(self, db: Session):
         self.db = db
-        self.product_repository = ProductRepository()
+        self.product_repository = ProductRepository( db )
 
     def create_product(self, product: ProductCreate):
         return self.product_repository.create_product(self.db, product)
