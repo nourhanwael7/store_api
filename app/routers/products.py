@@ -7,12 +7,11 @@ from app.services.product_service import ProductService
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
-product_service = ProductService()
-
 
 @router.post("/")
 def create_product(product: ProductCreate, db: Session = Depends(get_db)):
-    return product_service.create_product(db, product)
+    product_service = ProductService(db)
+    return product_service.create_product(product)
 
 
 @router.get("/")
@@ -21,4 +20,5 @@ def get_products(
     limit: int = 10,
     db: Session = Depends(get_db)
 ):
-    return product_service.get_products(db, skip, limit)
+    product_service = ProductService(db)
+    return product_service.get_products(skip, limit)

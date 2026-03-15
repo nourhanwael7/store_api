@@ -7,14 +7,14 @@ from app.services.category_service import CategoryService
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
 
-category_service = CategoryService()
-
 
 @router.post("/")
 def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
-    return category_service.create_category(db, category)
+    category_service = CategoryService(db)
+    return category_service.create_category(category)
 
 
 @router.get("/")
 def get_categories(db: Session = Depends(get_db)):
-    return category_service.get_categories(db)
+    category_service = CategoryService(db)
+    return category_service.get_categories()

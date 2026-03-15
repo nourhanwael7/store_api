@@ -6,8 +6,8 @@ from app.services.user_service import UserService
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
-user_service = UserService()
 
 @router.post("/")
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    return user_service.create_user(db, user)
+    user_service = UserService(db)
+    return user_service.create_user(user)
